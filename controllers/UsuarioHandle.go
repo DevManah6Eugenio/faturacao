@@ -24,7 +24,7 @@ func UsuarioHandle(w http.ResponseWriter, r *http.Request) {
 	case "DELETE":
 		doDeleteUsuario(w, r)
 	case "OPTIONS":
-    	utils.ConfigCors(&w);
+    	utils.ConfigCors(&w)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))
