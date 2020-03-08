@@ -23,6 +23,8 @@ func FornecedorHandle(w http.ResponseWriter, r *http.Request) {
 		doPutFornecedor(w, r)
 	case "DELETE":
 		doDeleteFornecedor(w, r)
+	case "OPTIONS":
+    	utils.ConfigCors(&w);
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))

@@ -23,6 +23,8 @@ func ProdutoHandle(w http.ResponseWriter, r *http.Request) {
 		doPutProduto(w, r)
 	case "DELETE":
 		doDeleteProduto(w, r)
+	case "OPTIONS":
+    	utils.ConfigCors(&w);
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))
