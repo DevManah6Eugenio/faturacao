@@ -1,0 +1,582 @@
+openapi: 3.0.0
+info:
+  description: Documentação da API Faturação
+  version: "1.0.0"
+  title: Faturação API
+  contact:
+    email: manassescruz.sg@gmail.com
+    
+servers:
+  - url: http://api.aindavaisercriado.com/v1
+    description: Servidor em produção
+
+tags:
+  - name: Formulacao
+    description: Métodos relativos a Formulação
+  - name: Fornecedor 
+    description: Métodos relativos a Fornecedor 
+  - name: MateriaPrima 
+    description: Métodos relativos a Materia Prima 
+  - name: Produto 
+    description: Métodos relativos a Produto 
+  - name: Usuario  
+    description: Métodos relativos a Usuário  
+
+paths:
+  /formulacao:
+    post:
+      tags:
+        - Formulacao
+      summary: cadastrar Formulação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/faturacao'
+      responses:
+        200:
+          description: Formulacao cadastrada com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    get:
+      tags:
+        - Formulacao
+      summary: consulta de Formulação
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da faturação
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: codigo
+          in: header
+          required: true
+          description: codigo da faturação
+          schema:
+            type : string
+            minimum: 0
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfFaturacao'
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    put:
+      tags:
+        - Formulacao
+      summary: atualizar Formulação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/faturacao'
+      responses:
+        200:
+          description: Formulacao atualizada com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    delete:
+      tags:
+        - Formulacao
+      summary: deleta Formulação
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da Formulação
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        200:
+          description: Formulacao deletada com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+
+  /fornecedor:
+    post:
+      tags:
+        - Fornecedor
+      summary: cadastrar Fornecedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/fornecedor'
+      responses:
+        200:
+          description: Fornecedor cadastrado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    get:
+      tags:
+        - Fornecedor
+      summary: consulta de Fornecedor
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da fornecedor
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: cnpj
+          in: header
+          required: true
+          description: cnpj do fornecedor
+          schema:
+            type : string
+            minimum: 0
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfFornecedor'
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    put:
+      tags:
+        - Fornecedor
+      summary: atualizar Fornecedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/fornecedor'
+      responses:
+        200:
+          description: Fornecedor atualizado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    delete:
+      tags:
+        - Fornecedor
+      summary: deleta Fornecedor
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da Fornecedor
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        200:
+          description: Fornecedor deletado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+          
+  /materiaprima:
+    post:
+      tags:
+        - MateriaPrima
+      summary: cadastrar Materia Prima
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/materiaprima'
+      responses:
+        200:
+          description: Materia Prima cadastrada com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    get:
+      tags:
+        - MateriaPrima
+      summary: consulta de Materia Prima
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da materia prima
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: nome
+          in: header
+          required: true
+          description: nome da materia prima
+          schema:
+            type : string
+            minimum: 0
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfMateriaPrima'
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    put:
+      tags:
+        - MateriaPrima
+      summary: atualizar Materia Prima
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/materiaprima'
+      responses:
+        200:
+          description: Materia Prima atualizada com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    delete:
+      tags:
+        - MateriaPrima
+      summary: deleta Materia Prima
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da Materia Prima
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        200:
+          description: Materia Prima deletada com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+          
+  /produto:
+    post:
+      tags:
+        - Produto
+      summary: cadastro de Produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/produto'
+      responses:
+        200:
+          description: Produto cadastrado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    get:
+      tags:
+        - Produto
+      summary: consulta de Produto
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id do produto
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: nome
+          in: header
+          required: true
+          description: nome do produto
+          schema:
+            type : string
+            minimum: 0
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfProduto'
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    put:
+      tags:
+        - Produto
+      summary: atualizar Produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/produto'
+      responses:
+        200:
+          description: Produto atualizado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    delete:
+      tags:
+        - Produto
+      summary: deleta Produto
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da Produto
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        200:
+          description: Produto deletado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+          
+  /usuario:
+    post:
+      tags:
+        - Usuario
+      summary: cadastro de Usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/usuario'
+      responses:
+        200:
+          description: Usuario cadastrado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    get:
+      tags:
+        - Usuario
+      summary: consulta de Usuario
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id do usuario
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: nome
+          in: header
+          required: true
+          description: nome do usuario
+          schema:
+            type : string
+            minimum: 0
+        - name: cpf
+          in: path
+          required: true
+          description: cpf do usuario
+          schema:
+            type : string
+            minimum: 0
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfUsuario'
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    put:
+      tags:
+        - Usuario
+      summary: atualizar Usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/usuario'
+      responses:
+        200:
+          description: Usuario atualizado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+    delete:
+      tags:
+        - Usuario
+      summary: deleta Usuario
+      parameters:
+        - name: id
+          in: header
+          required: true
+          description: id da Usuario
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        200:
+          description: Usuario deletado com sucesso
+        400:
+          description: Dado enviados incorretos 
+        500:
+          description: Erro no servidor
+          
+components:
+  schemas:
+    faturacao:
+      type: object
+      properties:
+        id:
+          type: integer
+        codigo:
+          type: string
+        qtdestimadaproduzida:
+          type: number
+        icm:
+          type: number
+        pis:
+          type: number
+        confis:
+          type: number
+        comissao:
+          type: number
+        margemlucro:
+          type: number
+        despesafixa:
+          type: number
+        outrosdescontos:
+          type: number
+        custoestimado:
+          type: number
+        obs:
+          type: string
+        valorvenda:
+          type: number
+          
+    usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        cpf: 
+          type: string
+        email:
+          type: string
+          format: email
+        senha:
+          type: string
+          format: password
+      
+    materiaprima:
+      type: object
+      properties:
+        id:
+          type: integer
+        codigo:
+          type: string
+        nome: 
+          type: string
+        unidadecompra: 
+          type: string
+        valor: 
+          type: number
+    
+    produto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome: 
+          type: string
+        codigo: 
+          type: string
+      
+    fornecedor:
+      type: object
+      properties:
+        id:
+          type: integer 
+        cnpj: 
+          type: string
+        nome: 
+          type: string
+        empresa: 
+          type: string
+        telefone1: 
+          type: string
+        telefone2: 
+          type: string
+        email:
+          type: string
+          format: email
+          
+    ArrayOfFaturacao:
+      type: array
+      items:
+        $ref: '#/components/schemas/faturacao'
+
+    ArrayOfFornecedor:
+      type: array
+      items:
+        $ref: '#/components/schemas/fornecedor'
+
+    ArrayOfMateriaPrima:
+      type: array
+      items:
+        $ref: '#/components/schemas/materiaprima'
+
+    ArrayOfProduto:
+      type: array
+      items:
+        $ref: '#/components/schemas/produto'
+
+    ArrayOfUsuario:
+      type: array
+      items:
+        $ref: '#/components/schemas/usuario'
