@@ -16,7 +16,7 @@ const (
 	SSLMODE  = "disable"
 )
 
-func Connection() (*sql.DB) { 
+func Connection() *sql.DB {
 
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
 		HOST, PORT, USER, PASSWORD, DATABASE, SSLMODE)
