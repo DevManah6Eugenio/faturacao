@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Manah6Eugenio/faturacao/dao"
-	"github.com/Manah6Eugenio/faturacao/db"
+	"github.com/Manah6Eugenio/faturacao/database"
 	"github.com/Manah6Eugenio/faturacao/models"
 	"github.com/Manah6Eugenio/faturacao/utils"
 )
@@ -24,7 +24,7 @@ func MateriaPrimaHandle(w http.ResponseWriter, r *http.Request) {
 	case "DELETE":
 		doDeleteMateriaPrima(w, r)
 	case "OPTIONS":
-    	utils.ConfigCors(&w)
+		utils.ConfigCors(&w)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))
@@ -32,14 +32,14 @@ func MateriaPrimaHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func doGetMateriaPrima(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	r.ParseForm()
 	var js []byte
 	if r.Form.Get("id") != "" {
 		js, _ = json.Marshal(dao.SelectMateriaPrimaId(con, utils.ParseInt(r.Form.Get("id"))))
 	} else {
-		js, _ = json.Marshal(dao.SelectMateriaPrima(con, 
+		js, _ = json.Marshal(dao.SelectMateriaPrima(con,
 			models.MateriaPrima{Codigo: r.Form.Get("codigo"), Nome: r.Form.Get("nome")}))
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -47,7 +47,7 @@ func doGetMateriaPrima(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPostMateriaPrima(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -62,7 +62,7 @@ func doPostMateriaPrima(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPutMateriaPrima(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -77,7 +77,7 @@ func doPutMateriaPrima(w http.ResponseWriter, r *http.Request) {
 }
 
 func doDeleteMateriaPrima(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {

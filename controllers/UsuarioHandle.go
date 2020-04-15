@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Manah6Eugenio/faturacao/dao"
-	"github.com/Manah6Eugenio/faturacao/db"
+	"github.com/Manah6Eugenio/faturacao/database"
 	"github.com/Manah6Eugenio/faturacao/models"
 	"github.com/Manah6Eugenio/faturacao/utils"
 )
@@ -24,7 +24,7 @@ func UsuarioHandle(w http.ResponseWriter, r *http.Request) {
 	case "DELETE":
 		doDeleteUsuario(w, r)
 	case "OPTIONS":
-    	utils.ConfigCors(&w)
+		utils.ConfigCors(&w)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))
@@ -34,12 +34,12 @@ func UsuarioHandle(w http.ResponseWriter, r *http.Request) {
 func doGetUsuario(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	var js []byte
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	if r.Form.Get("id") != "" {
 		js, _ = json.Marshal(dao.SelectUsuarioId(con, utils.ParseInt(r.Form.Get("id"))))
 	} else {
-		js, _ = json.Marshal(dao.SelectUsuario(con, 
+		js, _ = json.Marshal(dao.SelectUsuario(con,
 			models.Usuario{Nome: r.Form.Get("nome"), Cpf: r.Form.Get("cpf")}))
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -47,7 +47,7 @@ func doGetUsuario(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPostUsuario(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -62,7 +62,7 @@ func doPostUsuario(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPutUsuario(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -77,7 +77,7 @@ func doPutUsuario(w http.ResponseWriter, r *http.Request) {
 }
 
 func doDeleteUsuario(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {

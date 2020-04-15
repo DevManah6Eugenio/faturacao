@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Manah6Eugenio/faturacao/dao"
-	"github.com/Manah6Eugenio/faturacao/db"
+	"github.com/Manah6Eugenio/faturacao/database"
 	"github.com/Manah6Eugenio/faturacao/models"
 	"github.com/Manah6Eugenio/faturacao/utils"
 )
@@ -24,7 +24,7 @@ func ProdutoHandle(w http.ResponseWriter, r *http.Request) {
 	case "DELETE":
 		doDeleteProduto(w, r)
 	case "OPTIONS":
-    	utils.ConfigCors(&w)
+		utils.ConfigCors(&w)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))
@@ -32,14 +32,14 @@ func ProdutoHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func doGetProduto(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	r.ParseForm()
 	var js []byte
 	if r.Form.Get("id") != "" {
 		js, _ = json.Marshal(dao.SelectProdutoId(con, utils.ParseInt(r.Form.Get("id"))))
 	} else {
-		js, _ = json.Marshal(dao.SelectProduto(con, 
+		js, _ = json.Marshal(dao.SelectProduto(con,
 			models.Produto{Nome: r.Form.Get("nome"), Codigo: r.Form.Get("codigo")}))
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -47,7 +47,7 @@ func doGetProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPostProduto(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -62,7 +62,7 @@ func doPostProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPutProduto(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -77,7 +77,7 @@ func doPutProduto(w http.ResponseWriter, r *http.Request) {
 }
 
 func doDeleteProduto(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {

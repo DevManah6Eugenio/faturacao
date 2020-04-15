@@ -9,13 +9,11 @@ import (
 )
 
 func main() {
-
-	port := os.Getenv("PORT")
+	port := os.Getenv("PORT") //variavel de anbiente com a porta
 	if port == "" {
 		panic("$PORT não definida")
 	}
-
-	log.Println("servidor iniciado localhost:" + port)
+	log.Println("servidor iniciado na porta: " + port)
 	routes.CarregaRotas()
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

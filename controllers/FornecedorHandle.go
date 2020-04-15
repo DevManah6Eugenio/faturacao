@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Manah6Eugenio/faturacao/dao"
-	"github.com/Manah6Eugenio/faturacao/db"
+	"github.com/Manah6Eugenio/faturacao/database"
 	"github.com/Manah6Eugenio/faturacao/models"
 	"github.com/Manah6Eugenio/faturacao/utils"
 )
@@ -24,7 +24,7 @@ func FornecedorHandle(w http.ResponseWriter, r *http.Request) {
 	case "DELETE":
 		doDeleteFornecedor(w, r)
 	case "OPTIONS":
-    	utils.ConfigCors(&w)
+		utils.ConfigCors(&w)
 	default:
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"message": "not found"}`))
@@ -32,14 +32,14 @@ func FornecedorHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func doGetFornecedor(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	r.ParseForm()
 	var js []byte
 	if r.Form.Get("id") != "" {
 		js, _ = json.Marshal(dao.SelectFornecedorId(con, utils.ParseInt(r.Form.Get("id"))))
 	} else {
-		js, _ = json.Marshal(dao.SelectFornecedor(con, 
+		js, _ = json.Marshal(dao.SelectFornecedor(con,
 			models.Fornecedor{Nome: r.Form.Get("nome"), Cnpj: r.Form.Get("cnpj")}))
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -47,7 +47,7 @@ func doGetFornecedor(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPostFornecedor(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -62,7 +62,7 @@ func doPostFornecedor(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPutFornecedor(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -77,7 +77,7 @@ func doPutFornecedor(w http.ResponseWriter, r *http.Request) {
 }
 
 func doDeleteFornecedor(w http.ResponseWriter, r *http.Request) {
-	con := db.Connection()
+	con := database.Connection()
 	defer con.Close()
 	corpo, err := ioutil.ReadAll(r.Body)
 	if err != nil {
