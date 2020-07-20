@@ -36,12 +36,8 @@ func doGetProduto(w http.ResponseWriter, r *http.Request) {
 	defer con.Close()
 	r.ParseForm()
 	var js []byte
-	if r.Form.Get("id") != "" {
-		js, _ = json.Marshal(dao.SelectProdutoId(con, utils.ParseInt(r.Form.Get("id"))))
-	} else {
-		js, _ = json.Marshal(dao.SelectProduto(con,
-			models.Produto{Nome: r.Form.Get("nome"), Codigo: r.Form.Get("codigo")}))
-	}
+	js, _ = json.Marshal(dao.SelectProduto(con,
+		models.Produto{Nome: r.Form.Get("nome"), Codigo: r.Form.Get("codigo"), Id: utils.ParseInt(r.Form.Get("id"))}))
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, string(js))
 }

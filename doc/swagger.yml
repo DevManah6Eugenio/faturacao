@@ -33,7 +33,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/faturacao'
+              $ref: '#/components/schemas/formulacao'
       responses:
         200:
           description: Formulacao cadastrada com sucesso
@@ -81,7 +81,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/faturacao'
+              $ref: '#/components/schemas/formulacao'
       responses:
         200:
           description: Formulacao atualizada com sucesso
@@ -467,35 +467,37 @@ paths:
           
 components:
   schemas:
-    faturacao:
+    formulacao:
       type: object
       properties:
         id:
           type: integer
         codigo:
           type: string
-        qtdestimadaproduzida:
+        qtdEstimadaProduzida:
           type: number
         icm:
           type: number
         pis:
           type: number
-        confis:
+        cofins:
           type: number
         comissao:
           type: number
-        margemlucro:
+        margemLucro:
           type: number
-        despesafixa:
+        despesaFixa:
           type: number
-        outrosdescontos:
+        outrosDescontos:
           type: number
-        custoestimado:
+        custoEstimado:
           type: number
-        obs:
+        observacao:
           type: string
-        valorvenda:
+        valorVenda:
           type: number
+        formulacaoProduto:
+          $ref: '#/components/schemas/ArrayOfFormulacaoProduto'
           
     usuario:
       type: object
@@ -504,7 +506,7 @@ components:
           type: integer
         nome:
           type: string
-        cpf: 
+        cpf_cnpj: 
           type: string
         email:
           type: string
@@ -542,24 +544,36 @@ components:
       properties:
         id:
           type: integer 
-        cnpj: 
+        cpf_cnpj: 
           type: string
         nome: 
           type: string
         empresa: 
           type: string
-        telefone1: 
+        telefone: 
           type: string
-        telefone2: 
+        celular: 
           type: string
         email:
           type: string
           format: email
           
+    formulacaoProduto:
+      type: object
+      properties:
+        id:
+          type: integer 
+        quantidade:
+          type: integer 
+        valor: 
+          type: number
+        produto:
+          $ref: '#/components/schemas/produto'
+          
     ArrayOfFaturacao:
       type: array
       items:
-        $ref: '#/components/schemas/faturacao'
+        $ref: '#/components/schemas/formulacao'
 
     ArrayOfFornecedor:
       type: array
@@ -580,3 +594,8 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/usuario'
+
+    ArrayOfFormulacaoProduto:
+      type: array
+      items:
+        $ref: '#/components/schemas/formulacaoProduto'

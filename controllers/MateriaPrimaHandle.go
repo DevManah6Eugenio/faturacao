@@ -36,12 +36,8 @@ func doGetMateriaPrima(w http.ResponseWriter, r *http.Request) {
 	defer con.Close()
 	r.ParseForm()
 	var js []byte
-	if r.Form.Get("id") != "" {
-		js, _ = json.Marshal(dao.SelectMateriaPrimaId(con, utils.ParseInt(r.Form.Get("id"))))
-	} else {
-		js, _ = json.Marshal(dao.SelectMateriaPrima(con,
-			models.MateriaPrima{Codigo: r.Form.Get("codigo"), Nome: r.Form.Get("nome")}))
-	}
+	js, _ = json.Marshal(dao.SelectMateriaPrima(con,
+		models.MateriaPrima{Codigo: r.Form.Get("codigo"), Nome: r.Form.Get("nome"), Id: utils.ParseInt(r.Form.Get("id"))}))
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, string(js))
 }

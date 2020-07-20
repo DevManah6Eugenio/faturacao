@@ -36,12 +36,8 @@ func doGetUsuario(w http.ResponseWriter, r *http.Request) {
 	var js []byte
 	con := database.Connection()
 	defer con.Close()
-	if r.Form.Get("id") != "" {
-		js, _ = json.Marshal(dao.SelectUsuarioId(con, utils.ParseInt(r.Form.Get("id"))))
-	} else {
-		js, _ = json.Marshal(dao.SelectUsuario(con,
-			models.Usuario{Nome: r.Form.Get("nome"), Cpf: r.Form.Get("cpf")}))
-	}
+	js, _ = json.Marshal(dao.SelectUsuario(con,
+		models.Usuario{Nome: r.Form.Get("nome"), Cpf: r.Form.Get("cpf"), Id: utils.ParseInt(r.Form.Get("id"))}))
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, string(js))
 }
@@ -58,7 +54,9 @@ func doPostUsuario(w http.ResponseWriter, r *http.Request) {
 	if err2 != nil {
 		panic(err2)
 	}
-	dao.InsertUsuario(con, &user)
+	js, _ := json.Marshal(dao.InsertUsuario(con, &user))
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprint(w, string(js))
 }
 
 func doPutUsuario(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +71,9 @@ func doPutUsuario(w http.ResponseWriter, r *http.Request) {
 	if err2 != nil {
 		panic(err2)
 	}
-	dao.UpdateUsuario(con, &user)
+	js, _ := json.Marshal(dao.UpdateUsuario(con, &user))
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprint(w, string(js))
 }
 
 func doDeleteUsuario(w http.ResponseWriter, r *http.Request) {
@@ -88,5 +88,7 @@ func doDeleteUsuario(w http.ResponseWriter, r *http.Request) {
 	if err2 != nil {
 		panic(err2)
 	}
-	dao.DeleteUsuario(con, user.Id)
+	js, _ := json.Marshal(dao.DeleteUsuario(con, user.Id))
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprint(w, string(js))
 }
