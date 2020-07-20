@@ -36,12 +36,8 @@ func doGetFornecedor(w http.ResponseWriter, r *http.Request) {
 	defer con.Close()
 	r.ParseForm()
 	var js []byte
-	if r.Form.Get("id") != "" {
-		js, _ = json.Marshal(dao.SelectFornecedorId(con, utils.ParseInt(r.Form.Get("id"))))
-	} else {
-		js, _ = json.Marshal(dao.SelectFornecedor(con,
-			models.Fornecedor{Nome: r.Form.Get("nome"), Cnpj: r.Form.Get("cnpj")}))
-	}
+	js, _ = json.Marshal(dao.SelectFornecedor(con,
+		models.Fornecedor{Nome: r.Form.Get("nome"), Cnpj: r.Form.Get("cnpj"), Id: utils.ParseInt(r.Form.Get("id"))}))
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprint(w, string(js))
 }

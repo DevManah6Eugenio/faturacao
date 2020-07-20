@@ -1,14 +1,12 @@
 package models
 
-import "github.com/jinzhu/gorm"
-
 type MateriaPrima struct {
-	gorm.Model
-	Id            int64        `json:"id"  gorm:"Column:id;primary_key"`
-	Codigo        string       `json:"codigo"  gorm:"Column:codigo"`
-	Nome          string       `json:"nome"  gorm:"Column:nome"`
-	UnidadeCompra string       `json:"unidadecompra"  gorm:"Column:unidade_compra"`
-	Valor         float64      `json:"valor"  gorm:"Column:valor"`
+	model
+	Id            int64        `json:"id" 				 gorm:"Column:id"`
+	Codigo        string       `json:"codigo" 			 gorm:"Column:codigo"`
+	Nome          string       `json:"nome" 			 gorm:"Column:nome"`
+	UnidadeCompra string       `json:"unidadeCompra"	 gorm:"Column:unidade_compra"`
+	Valor         float64      `json:"valor"  			 gorm:"Column:valor"`
 	Fornecedores  []Fornecedor `json:"fornecedores"`
 }
 

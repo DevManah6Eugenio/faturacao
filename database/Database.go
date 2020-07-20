@@ -20,6 +20,8 @@ func Connection() *gorm.DB {
 	if err != nil {
 		panic(err.Error())
 	}
+	db.LogMode(true) //debug sql
 	db.SingularTable(true)
+	//db.AutoMigrate(&models.Formulacao{}, &models.Produto{}, &models.Usuario{}, &models.MateriaPrima{}, &models.Fornecedor{}, &models.FormulacaoProduto{})//criar as tabelas
 	return db
 }
